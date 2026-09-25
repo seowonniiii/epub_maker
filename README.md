@@ -1,26 +1,30 @@
-# TXT → EPUB
+# epub_maker — 여러 TXT 병합 + 미리보기/여백 조절 버전
 
-GitHub Pages에서 실행되는 개인용 TXT → EPUB 변환기입니다.
+## 주요 기능
 
-## 기능
-
-- `##1화`, `##2화` 기준 자동 회차 분리
-- 각 화를 독립 EPUB chapter로 생성
-- EPUB 목차 자동 생성
-- EPUB 3 `nav.xhtml` + 구형 리더 호환용 `toc.ncx`
-- TXT 첫 줄에서 소설 제목 자동 인식
-- 제목 페이지에 `소설 제목` + `1화 ~ 10화` 표시
-- 각 화 시작부에 반복되는 `소설 제목` / `1화` 자동 제거
-- 각 화 제목을 중앙 정렬 + 연보라색으로 스타일링
-- 표지 JPG/PNG 선택 지원
-- 표지 미선택 시 표지 페이지 생략
-- `fonts/NanumMyeongjo-Regular.ttf`가 있으면 EPUB에 자동 임베딩
-- 폰트 파일이 없어도 EPUB 생성은 계속되며 기기 기본 명조체 사용
+- TXT 파일 여러 개 동시 선택
+- 모든 TXT의 `##N화`를 읽어 화수 기준 자동 정렬
+- 예: `1~10화.txt + 11~20화.txt + 21~30화.txt` → 한 번에 `1~30화.epub`
+- 파일 선택 순서와 무관하게 회차 번호로 정렬
+- 겹치는 회차가 있으면 중복 제거
+  - 같은 회차가 여러 파일에 있으면 선택 목록에서 먼저 읽힌 파일의 회차를 유지
+- 1화~마지막 화 사이 빠진 회차 자동 표시
+- 첫 회차 실시간 미리보기
+- 좌우 본문 여백 조절
+- 회차 제목 위/아래 여백 조절
+- 문단 간격 조절
+- 조절한 값을 EPUB CSS에 그대로 반영
+- 선택 표지
+- 제목 페이지
+- 회차별 EPUB chapter
+- EPUB 3 목차 + NCX 목차
+- 각 회차 맨 앞의 반복 소설 제목/회차명 제거
+- 나눔명조 자동 임베딩
 
 ## 저장소 구조
 
 ```text
-txt-to-epub/
+epub_maker/
 ├── index.html
 ├── app.js
 ├── style.css
@@ -28,46 +32,14 @@ txt-to-epub/
     └── NanumMyeongjo-Regular.ttf
 ```
 
-> `NanumMyeongjo-Regular.ttf`는 직접 준비해서 `fonts` 폴더에 올려주세요.
-> 이 ZIP에는 폰트 파일 자체가 포함되어 있지 않습니다.
+`NanumMyeongjo-Regular.ttf`는 직접 `fonts` 폴더에 넣으세요.
 
-## GitHub Pages 켜기
+## GitHub 업데이트
 
-1. 이 ZIP의 파일들을 GitHub 저장소 루트에 업로드합니다.
-2. `fonts/NanumMyeongjo-Regular.ttf`도 업로드합니다.
-3. 저장소에서 **Settings → Pages**로 이동합니다.
-4. **Source: Deploy from a branch**
-5. **Branch: main / (root)**
-6. Save
+기존 저장소의 아래 3개 파일을 새 버전으로 교체하면 됩니다.
 
-잠시 후 아래 형식의 주소가 생깁니다.
+- `index.html`
+- `app.js`
+- `style.css`
 
-```text
-https://YOUR_GITHUB_ID.github.io/YOUR_REPOSITORY/
-```
-
-## TXT 형식
-
-```text
-소설제목_1~10화
-
-
-##1화
-
-소설제목
-
-1화
-
-본문...
-
-
-##2화
-
-소설제목
-
-2화
-
-본문...
-```
-
-각 회차 안의 반복 `소설제목`과 `N화`는 EPUB 생성 시 맨 앞부분에서 자동 제거됩니다.
+폰트는 기존 `fonts/NanumMyeongjo-Regular.ttf`를 그대로 두면 됩니다.

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f7f9" />
+  <title>TXT → EPUB</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="eyebrow">PRIVATE EPUB MAKER</p>
+      <h1>TXT → EPUB</h1>
+      <p class="hero-copy">
+        TXT를 회차별 EPUB으로 만들고, 첫 회차를 미리 보면서 여백을 직접 조절할 수 있습니다.
+      </p>
+    </header>
+
+    <section class="card">
+      <div class="section-head">
+        <span class="step">1</span>
+        <div>
+          <h2>TXT 파일</h2>
+          <p>TXT 여러 개를 한 번에 선택해도 됩니다. <code>##1화</code>, <code>##2화</code> 기준으로 합친 뒤 화수순으로 정렬합니다.</p>
+        </div>
+      </div>
+
+      <label class="file-drop">
+        <input id="txtFile" type="file" accept=".txt,text/plain" multiple />
+        <span class="file-drop-title">TXT 파일 여러 개 선택 가능</span>
+        <span id="txtFileName" class="file-drop-sub">선택된 파일 없음</span>
+      </label>
+
+      <div id="txtPreview" class="notice hidden"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <span class="step">2</span>
+        <div>
+          <h2>책 정보</h2>
+          <p>제목은 TXT 첫 줄에서 자동 인식됩니다.</p>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>소설 제목</span>
+        <input id="bookTitle" type="text" placeholder="자동 인식됩니다" />
+      </label>
+
+      <label class="field">
+        <span>작가명 <em>선택</em></span>
+        <input id="author" type="text" placeholder="비워도 됩니다" />
+      </label>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <span class="step">3</span>
+        <div>
+          <h2>표지 <em>선택</em></h2>
+          <p>JPG 또는 PNG. 선택하지 않으면 표지 페이지를 만들지 않습니다.</p>
+        </div>
+      </div>
+
+      <label class="file-drop">
+        <input id="coverFile" type="file" accept="image/jpeg,image/png" />
+        <span class="file-drop-title">표지 이미지 선택</span>
+        <span id="coverFileName" class="file-drop-sub">선택된 이미지 없음</span>
+      </label>
+
+      <img id="coverPreview" class="cover-preview hidden" alt="표지 미리보기" />
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <span class="step">4</span>
+        <div>
+          <h2>첫 회차 미리보기 + 여백 조절</h2>
+          <p>슬라이더를 움직이면 아래 페이지가 즉시 바뀝니다.</p>
+        </div>
+      </div>
+
+      <div class="controls-grid">
+        <label class="range-field">
+          <div>
+            <span>좌우 본문 여백</span>
+            <b id="sideMarginValue">7%</b>
+          </div>
+          <input id="sideMargin" type="range" min="3" max="18" step="1" value="7" />
+        </label>
+
+        <label class="range-field">
+          <div>
+            <span>회차 제목 위 여백</span>
+            <b id="titleTopValue">17%</b>
+          </div>
+          <input id="titleTop" type="range" min="5" max="30" step="1" value="17" />
+        </label>
+
+        <label class="range-field">
+          <div>
+            <span>회차 제목 아래 여백</span>
+            <b id="titleBottomValue">15%</b>
+          </div>
+          <input id="titleBottom" type="range" min="4" max="28" step="1" value="15" />
+        </label>
+
+        <label class="range-field">
+          <div>
+            <span>본문 문단 간격</span>
+            <b id="paragraphGapValue">1.32em</b>
+          </div>
+          <input id="paragraphGap" type="range" min="0.7" max="2.2" step="0.05" value="1.32" />
+        </label>
+      </div>
+
+      <div class="preview-shell">
+        <div id="chapterPreviewPage" class="ebook-page">
+          <div id="previewChapterNumber" class="ebook-chapter-number">1화</div>
+          <div id="previewBody" class="ebook-body">
+            <p>TXT 파일을 선택하면 첫 회차 본문이 여기에 표시됩니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="small-note">
+        미리보기는 EPUB 기본 스타일의 근사치입니다. Apple Books 등 일부 앱은 사용자의 글꼴/여백 설정으로 일부 스타일을 덮어쓸 수 있습니다.
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <span class="step">5</span>
+        <div>
+          <h2>글꼴</h2>
+          <p><code>fonts/NanumMyeongjo-Regular.ttf</code>를 자동 사용합니다.</p>
+        </div>
+      </div>
+      <div id="fontState" class="notice">나눔명조 확인 전</div>
+    </section>
+
+    <button id="makeBtn" class="primary" disabled>EPUB 만들기</button>
+    <div id="status" class="status" aria-live="polite"></div>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

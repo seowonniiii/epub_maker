@@ -1,0 +1,293 @@
+@font-face {
+  font-family: "PreviewNanumMyeongjo";
+  src: url("./fonts/NanumMyeongjo-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* { box-sizing: border-box; }
+
+:root {
+  color-scheme: light;
+  --bg: #f6f6f8;
+  --card: #fff;
+  --text: #222226;
+  --muted: #77777f;
+  --line: #e8e8ee;
+  --accent: #bc72d5;
+  --accent-soft: #f5eafa;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", sans-serif;
+}
+
+body { padding: 28px 16px 64px; }
+
+.app {
+  width: min(760px, 100%);
+  margin: 0 auto;
+}
+
+.hero { padding: 10px 2px 22px; }
+
+.eyebrow {
+  margin: 0 0 7px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(30px, 7vw, 42px);
+  letter-spacing: -.04em;
+}
+
+.hero-copy {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+code {
+  background: #efeff3;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .92em;
+}
+
+.card {
+  margin-bottom: 14px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 5px 24px rgba(20,20,28,.04);
+}
+
+.section-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 17px;
+}
+
+.section-head h2 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.section-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.section-head em,
+.field em {
+  font-style: normal;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: .8em;
+}
+
+.step {
+  flex: 0 0 28px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.file-drop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px;
+  border: 1.5px dashed #cfcfd7;
+  border-radius: 13px;
+  background: #fafafd;
+  cursor: pointer;
+}
+
+.file-drop input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-drop-title { font-weight: 750; }
+
+.file-drop-sub {
+  color: var(--muted);
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.field { display: block; }
+
+.field + .field { margin-top: 14px; }
+
+.field > span {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.field input {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid #dcdce2;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+}
+
+.notice {
+  margin-top: 12px;
+  padding: 12px 13px;
+  border-radius: 11px;
+  background: #f4f4f7;
+  color: #55555c;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.notice.good { background: #eef8f1; color: #316d45; }
+.notice.warn { background: #fff5e9; color: #965a11; }
+
+.cover-preview {
+  display: block;
+  max-width: 180px;
+  max-height: 250px;
+  margin-top: 14px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  object-fit: contain;
+}
+
+.hidden { display: none !important; }
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+  margin-bottom: 18px;
+}
+
+.range-field {
+  display: block;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fafafd;
+}
+
+.range-field > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 9px;
+  font-size: 13px;
+}
+
+.range-field span { font-weight: 650; }
+.range-field b { color: var(--accent); font-size: 13px; }
+.range-field input { width: 100%; accent-color: var(--accent); }
+
+.preview-shell {
+  padding: 14px;
+  border-radius: 16px;
+  background: #ececf1;
+  overflow: auto;
+}
+
+.ebook-page {
+  width: min(390px, 100%);
+  height: 610px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(20,20,28,.10);
+  font-family: "PreviewNanumMyeongjo", "Nanum Myeongjo", serif;
+  color: #222;
+}
+
+.ebook-chapter-number {
+  text-align: center;
+  color: var(--accent);
+  font-size: 25px;
+  line-height: 1.4;
+  font-weight: normal;
+}
+
+.ebook-body {
+  font-size: 16px;
+  line-height: 1.95;
+}
+
+.ebook-body p {
+  margin-top: 0;
+}
+
+.small-note {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.primary {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px;
+  background: #18181b;
+  color: white;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+.status {
+  min-height: 30px;
+  padding: 14px 6px;
+  color: var(--muted);
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.55;
+}
+
+@media (max-width: 600px) {
+  body { padding-top: 18px; }
+  .card { padding: 17px; border-radius: 16px; }
+  .controls-grid { grid-template-columns: 1fr; }
+  .ebook-page { height: 600px; }
+}
